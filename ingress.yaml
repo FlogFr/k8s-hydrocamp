@@ -1,0 +1,37 @@
+---
+# Source: hydrocamp/templates/ingresses.yaml
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: hydrocamp-server-ingress
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+    kubernetes.io/ingress.class: nginx
+    kubernetes.io/tls-acme: "true"
+    nginx.ingress.kubernetes.io/ssl-passthrough: "true"
+    # If you encounter a redirect loop or are getting a 307 response code
+    # then you need to force the nginx ingress to connect to the backend using HTTPS.
+    #
+spec:
+  rules:
+  - host: hydrocamp.fr
+    http:
+      paths:
+      - path: /static
+        pathType: Prefix
+        backend:
+          service:
+            name: frontend
+            port:
+              name: http
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: backend
+            port:
+              name: http
+  tls:
+  - hosts:
+    - hydrocamp.fr
+    secretName: hydrocamp-secret
