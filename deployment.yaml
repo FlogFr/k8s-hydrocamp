@@ -17,7 +17,7 @@ spec:
         - name: registry-gitlab-cred
       containers:
         - name: hydrocamp
-          image: "florian367:latest"
+          image: "florian367/wagtail:latest"
           imagePullPolicy: Always
           ports:
             - name: http
