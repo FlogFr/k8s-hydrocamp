@@ -1,0 +1,24 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hydrocamp
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: hydrocamp
+  template:
+    metadata:
+      labels:
+        app: hydrocamp
+    spec:
+      imagePullSecrets:
+        - name: registry-gitlab-cred
+      containers:
+        - name: hydrocamp
+          image: "florian367:latest"
+          imagePullPolicy: Always
+          ports:
+            - name: http
+              containerPort: 8080
