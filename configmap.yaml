@@ -6,7 +6,8 @@ metadata:
 data:
   nginx.conf: |
     worker_processes 1;
-    # daemon off;
+    daemon off;
+    error_log /dev/stdout info;
     
     events {
         worker_connections 2048;
@@ -15,7 +16,6 @@ data:
     http {
       server {
         listen 8080;
-        error_log /dev/stdout info;
     
         location / {
           proxy_pass http://127.0.0.1:8000/;
