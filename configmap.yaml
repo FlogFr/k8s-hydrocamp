@@ -6,7 +6,7 @@ metadata:
 data:
   nginx.conf: |
     worker_processes 1;
-    daemon off;
+    # daemon off;
     error_log /dev/stdout info;
     
     events {
