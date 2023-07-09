@@ -17,7 +17,7 @@ spec:
         - name: scw-hub-secret
       containers:
         - name: nginx
-          image: "nginx:latest"
+          image: "registry.hub.docker.com/library/nginx:latest"
           imagePullPolicy: Always
           ports:
             - name: http
