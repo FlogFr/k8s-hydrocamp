@@ -29,6 +29,9 @@ spec:
         - name: backend
           image: "rg.fr-par.scw.cloud/hydrocamp/backend:latest"
           imagePullPolicy: Always
+          env:
+            - name: "DJANGO_SETTINGS_MODULE"
+              value: "hydrocamp.settings.production"
           ports:
             - name: wsgi
               containerPort: 8000
