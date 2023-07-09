@@ -2,23 +2,37 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: hydrocamp
+  name: backend
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: hydrocamp
+      app: backend
   template:
     metadata:
       labels:
-        app: hydrocamp
+        app: backend
     spec:
       imagePullSecrets:
-        - name: registry-gitlab-cred
+        - name: scw-hub-secret
       containers:
-        - name: hydrocamp
-          image: "florian367/wagtail:latest"
+        - name: nginx
+          image: "nginx:latest"
           imagePullPolicy: Always
           ports:
             - name: http
               containerPort: 8080
+          volumeMounts:
+            - name: nginx-conf
+              mountPath: /etc/nginx/nginx.conf
+              subPath: nginx.conf
+        - name: backend
+          image: "rg.fr-par.scw.cloud/hydrocamp/backend:latest"
+          imagePullPolicy: Always
+          ports:
+            - name: wsgi
+              containerPort: 8000
+      volumes:
+        - name: nginx-conf
+          configMap:
+            name: nginx-conf
