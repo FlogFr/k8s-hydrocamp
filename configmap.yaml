@@ -39,3 +39,45 @@ data:
         }
       }
     }
+
+---
+---
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: backend-conf
+data:
+  production.py: |
+    from .base import *
+    
+    DEBUG = False
+    
+    try:
+        from .local import *
+    except ImportError:
+        pass
+    
+    # SECURITY WARNING: keep the secret key used in production secret!
+    SECRET_KEY = "agl67OI8O4Nf5BwZK0xpBbbAokTuqppLz99JfDhT-pu6MfNmodtsYNa-vS7kwY-wcC-Ntd3ydJKpRMPvqukCYm9tEnj9XMQB"
+    
+    # https://django-storages.readthedocs.io/en/latest/backends/amazon-S3.html
+    # django < 4.2
+    DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+    
+    # AWS Settings
+    # https://django-storages.readthedocs.io/en/latest/backends/amazon-S3.html
+    AWS_S3_REGION_NAME = "fr-par"
+    AWS_S3_ACCESS_KEY_ID = "SCWQKMT1BTWKE4FYC137"
+    AWS_S3_SECRET_ACCESS_KEY = "d3ecacea-35f8-46f4-ba89-66e4ac30253e"
+    AWS_STORAGE_BUCKET_NAME = "hydrocamp"
+    AWS_DEFAULT_ACL = 'public-read'
+    AWS_S3_ENDPOINT_URL = 'https://hydrocamp.s3.fr-par.scw.cloud'
+    
+    # s3 static settings
+    AWS_LOCATION = 'static'
+    STATIC_URL = f'https://hydrocamp.s3.fr-par.scw.cloud/{AWS_LOCATION}/'
+    # django < 4.2
+    STATICFILES_STORAGE = 'storages.backends.s3boto3.S3StaticStorage'
+    
+    # SECURITY WARNING: define the correct hosts in production!
+    ALLOWED_HOSTS = ["*"]

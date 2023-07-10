@@ -35,7 +35,14 @@ spec:
           ports:
             - name: wsgi
               containerPort: 8000
+          volumeMounts:
+            - name: backend-conf
+              mountPath: /app/hydrocamp/settings/production.py
+              subPath: production.py
       volumes:
         - name: nginx-conf
           configMap:
             name: nginx-conf
+        - name: backend-conf
+          configMap:
+            name: backend-conf
