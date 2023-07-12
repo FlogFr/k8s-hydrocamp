@@ -41,7 +41,6 @@ data:
     }
 
 ---
----
 kind: ConfigMap
 apiVersion: v1
 metadata:
@@ -81,3 +80,14 @@ data:
     
     # SECURITY WARNING: define the correct hosts in production!
     ALLOWED_HOSTS = ["*"]
+
+    #
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.db.backends.postgresql",
+            "HOST": "postgresql.postgresql.svc.cluster.local",
+            "NAME": "hydrocamp",
+            "USER": "hydrocamp",
+            "PASSWORD": "fz7koVwJiswdD6jNnPCM",
+        }
+    }
